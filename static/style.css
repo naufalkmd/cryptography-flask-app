@@ -1,0 +1,445 @@
+/*
+CRYPTOGRAPHY WEB APP STYLES - MODERN CLEAN VERSION
+=================================================
+
+This CSS file provides clean, modern styling for our cryptography app.
+The design focuses on simplicity, readability, and learning.
+
+CSS Concepts used:
+- Flexbox for layout
+- CSS Variables for consistent colors
+- Box shadows for depth
+- Transitions for interactive elements
+- Responsive design with media queries
+*/
+
+/* CSS Variables for consistent colors and spacing */
+:root {
+  /* Modern color palette */
+  --primary-color: #4f46e5; /* Indigo */
+  --primary-hover: #4338ca; /* Darker indigo */
+  --secondary-color: #6b7280; /* Gray */
+  --success-color: #10b981; /* Green */
+  --error-color: #ef4444; /* Red */
+  --warning-color: #f59e0b; /* Amber */
+  --info-color: #0ea5e9; /* Sky blue */
+
+  /* Background and text colors */
+  --bg-color: #f9fafb; /* Very light gray background */
+  --card-bg: #ffffff; /* White cards */
+  --text-color: #1f2937; /* Dark gray text */
+  --text-light: #6b7280; /* Light gray text */
+  --border-color: #e5e7eb; /* Light border */
+
+  /* Spacing and sizing */
+  --border-radius: 12px;
+  --button-radius: 8px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Shadows for depth */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  min-height: 100vh;
+}
+
+/* Container for centering content */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styles */
+header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+.description {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Main content area */
+main {
+  flex: 1;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Big cipher buttons for home page */
+.cipher-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cipher-button {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cipher-button:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.cipher-button h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+}
+
+.cipher-button .icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.cipher-button .difficulty {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-top: var(--spacing-xs);
+}
+
+.difficulty.beginner {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.difficulty.intermediate {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+.difficulty.advanced {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Button styles */
+.btn {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: none;
+  border-radius: var(--button-radius);
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-back:hover {
+  background-color: #f9fafb;
+}
+
+.btn-back::before {
+  content: "←";
+  margin-right: 8px;
+}
+
+/* Information boxes */
+.info-box,
+.example-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.info-box {
+  border-left: 4px solid var(--info-color);
+}
+
+.example-box {
+  border-left: 4px solid var(--warning-color);
+}
+
+.info-box h2,
+.example-box h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.info-box ul,
+.example-box ol {
+  margin-left: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.info-box code,
+.example-box code {
+  background-color: #f1f5f9;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+}
+
+/* Form layouts */
+.cipher-forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-section h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--border-color);
+  border-radius: var(--button-radius);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-group small {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+/* Focus styles for accessibility */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Result boxes */
+.result-box {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  border: 1px solid;
+}
+
+.result-box.success {
+  background-color: #ecfdf5;
+  border-color: var(--success-color);
+  color: #065f46;
+}
+
+.result-box.error {
+  background-color: #fef2f2;
+  border-color: var(--error-color);
+  color: #991b1b;
+}
+
+.result-box.info {
+  background-color: #f0f9ff;
+  border-color: var(--info-color);
+  color: #0c4a6e;
+}
+
+.result-box h3 {
+  margin-bottom: var(--spacing-xs);
+}
+
+.result-text {
+  font-family: "Courier New", monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius);
+  word-break: break-all;
+}
+
+/* Flash Messages */
+.flash-messages {
+  margin-bottom: var(--spacing-md);
+}
+
+.flash-messages .result-box {
+  margin-bottom: var(--spacing-xs);
+}
+
+.flash-messages .result-box p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: var(--spacing-md) 0;
+  color: var(--text-light);
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .cipher-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .cipher-forms {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .form-section {
+    padding: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .cipher-forms {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Print styles for educational use */
+@media print {
+  .btn,
+  .form-group,
+  .result-box.info {
+    display: none;
+  }
+
+  .info-box,
+  .example-box {
+    break-inside: avoid;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}
