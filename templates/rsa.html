@@ -273,21 +273,6 @@
             <p>To decrypt 32 back to 'C':</p>
             <p>m = 32<sup>173</sup> mod 323 = 2 = 'C'</p>
         </div>
-
-        <!-- Implementation Guide -->
-        <div class="example-box">
-            <h2>📝 Implementation Guide (Advanced)</h2>
-            <p><strong>To implement RSA:</strong></p>
-            <ol>
-                <li>Implement <code>is_prime()</code> to check if numbers are prime</li>
-                <li>Implement <code>mod_inverse()</code> using Extended Euclidean Algorithm</li>
-                <li>Implement <code>rsa_generate_keys(p, q)</code> to create public/private keys</li>
-                <li>Implement <code>rsa_encrypt(message, public_key)</code></li>
-                <li>Implement <code>rsa_decrypt(cipher, private_key)</code></li>
-                <li>Add form handling in <code>app.py</code></li>
-            </ol>
-            <p><strong>Warning:</strong> This is educational RSA with small numbers. Real RSA uses primes with hundreds of digits!</p>
-        </div>
     </div>
 </body>
 </html>

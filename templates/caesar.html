@@ -154,35 +154,6 @@
             {% endif %}
         </main>
 
-        <!-- Example section for learning -->
-        <div class="example-box">
-            <h2>📚 Try These Examples</h2>
-            <p><strong>Example 1:</strong> Encrypt "HELLO WORLD" with shift 3</p>
-            <p>Expected result: "KHOOR ZRUOG"</p>
-            <hr style="margin: 10px 0; border-top: 1px dashed #ccc;">
-            <p><strong>Example 2:</strong> Encrypt "MEET ME AT DAWN" with shift 5</p>
-            <p>Expected result: "RJJY RJ FY IFBS"</p>
-            <hr style="margin: 10px 0; border-top: 1px dashed #ccc;">
-            <p><strong>Challenge:</strong> Can you decrypt "WKH TXLFN EURZQ IRA" with shift 3?</p>
-        </div>
         
-        <!-- Educational deep dive -->
-        <div class="info-box">
-            <h2>Understanding the Code</h2>
-            <p>
-                In our <code>ciphers.py</code> file, the Caesar cipher works by:
-            </p>
-            <ol>
-                <li>Converting each letter to its position in the alphabet (A=0, B=1, etc.)</li>
-                <li>Adding the shift value to this position</li>
-                <li>Using modulo 26 (% 26) to wrap around if we go past Z</li>
-                <li>Converting the new position back to a letter</li>
-            </ol>
-            <p>
-                <strong>Key Insight:</strong> Decryption is just encryption with a negative shift!
-                If we encrypted with shift +3, we decrypt with shift -3.
-            </p>
-        </div>
-    </div>
 </body>
 </html>
