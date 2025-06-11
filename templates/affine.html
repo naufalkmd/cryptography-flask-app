@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affine Cipher - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    AFFINE CIPHER TEMPLATE - PLACEHOLDER FOR FUTURE IMPLEMENTATION
+    
+    The Affine cipher uses mathematical functions: E(x) = (ax + b) mod 26
+    This template is ready for implementation!
+    -->
+    
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index') }}" class="btn btn-back">Back to Home</a>
+            <h1>📐 Affine Cipher</h1>
+            <p class="subtitle">A Mathematical Encryption Method</p>
+        </header>
+
+        <!-- Educational Information -->
+        <div class="info-box">
+            <h2>How the Affine Cipher Works</h2>
+            <p>
+                The Affine cipher is a type of monoalphabetic substitution cipher that uses mathematics to encrypt text.
+            </p>
+            <p>
+                <strong>The Mathematical Formula:</strong> E(x) = (ax + b) mod 26
+            </p>
+            <p>
+                Where:
+            </p>
+            <ul>
+                <li><strong>x</strong> = letter position (A=0, B=1, C=2, ..., Z=25)</li>
+                <li><strong>a</strong> = multiplicative key (must be coprime to 26)</li>
+                <li><strong>b</strong> = additive key (can be any number 0-25)</li>
+                <li><strong>mod 26</strong> = remainder when divided by 26 (keeps result in range 0-25)</li>
+            </ul>
+            <p>
+                <strong>Important:</strong> 'a' must be coprime to 26 for decryption to work!<br>
+                Valid values for 'a': 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25
+            </p>
+            <p>
+                <strong>Decryption formula:</strong> D(y) = a⁻¹ × (y - b) mod 26
+            </p>
+            <p>
+                Where a⁻¹ is the modular multiplicative inverse of 'a' modulo 26.
+            </p>
+        </div>
+
+        <main>
+            <!-- Flash Messages (success/error notifications) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="result-box {{ 'success' if category == 'success' else 'error' }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="cipher-forms">
+                <!-- ENCRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔒 Encrypt Text</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this form to affine_encrypt() function
+                        In app.py, add form handling:
+                        
+                        if 'affine_encrypt_submit' in request.form:
+                            plain_text = request.form['affine_encrypt_text']
+                            a = int(request.form['affine_a'])
+                            b = int(request.form['affine_b'])
+                            # Check if gcd(a, 26) == 1 first!
+                            result = affine_encrypt(plain_text, a, b)
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="affine_encrypt_text">Text to Encrypt:</label>
+                            <textarea 
+                                id="affine_encrypt_text" 
+                                name="affine_encrypt_text" 
+                                placeholder="Enter your message here..."
+                                required
+                            >{{ form_data.affine_encrypt_text if form_data else '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="affine_a">Key 'a' (multiplicative):</label>
+                            <select id="affine_a" name="affine_a" required>
+                                {# Get affine_a values #}
+                                {% set submitted_a = form_data.get('affine_a', 5) %}
+        
+                                {# List of valid predefined coprime values #}
+                                {% set valid_options = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25] %}
+
+                                {# List standard options and select the submitted one #}
+                                {% for val in valid_options %}
+                                    <option value="{{ val }}" {% if val == submitted_a %}selected{% endif %}>{{ val }}</option>
+                                {% endfor %}
+                            </select>
+                            <small>Must be coprime to 26 (gcd(a, 26) = 1)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="affine_b">Key 'b' (additive):</label>
+                            <input 
+                                type="number" 
+                                id="affine_b" 
+                                name="affine_b" 
+                                min="0" 
+                                max="25" 
+                                value="{{ form_data.affine_b if form_data else 9 }}"
+                                required
+                            >
+                            <small>Any number from 0 to 25</small>
+                        </div>
+
+                        <button type="submit" name="affine_encrypt_submit" class="btn btn-primary">
+                            Encrypt Message
+                        </button>
+                    </form>
+
+                    <!-- TODO: Add result display when logic is implemented -->
+                    {% if encrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Encryption Result:</h3>
+                        <p class="result-text">{{ encrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- DECRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔓 Decrypt Text</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this form to affine_decrypt() function
+                        You'll need to implement mod_inverse() first!
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="affine_decrypt_text">Text to Decrypt:</label>
+                            <textarea 
+                                id="affine_decrypt_text" 
+                                name="affine_decrypt_text" 
+                                placeholder="Enter encrypted message here..."
+                                required
+                            >{{ form_data.affine_decrypt_text if form_data else '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="affine_decrypt_a">Key 'a' (multiplicative):</label>
+                            <select id="affine_decrypt_a" name="affine_decrypt_a" required>
+                                {# Get affine_decrypt_a values #}
+                                {% set submitted_a = form_data.get('affine_decrypt_a', 5) %}
+        
+                                {# List of valid predefined coprime values #}
+                                {% set valid_options = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25] %}
+
+                                {# List standard options and select the submitted one #}
+                                {% for val in valid_options %}
+                                    <option value="{{ val }}" {% if val == submitted_a %}selected{% endif %}>{{ val }}</option>
+                                {% endfor %}
+                            </select>
+                            <small>Same 'a' value used for encryption</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="affine_decrypt_b">Key 'b' (additive):</label>
+                            <input 
+                                type="number" 
+                                id="affine_decrypt_b" 
+                                name="affine_decrypt_b" 
+                                min="0" 
+                                max="25" 
+                                value="{{ form_data.affine_decrypt_b if form_data else 8 }}"
+                                required
+                            >
+                            <small>Same 'b' value used for encryption</small>
+                        </div>
+
+                        <button type="submit" name="affine_decrypt_submit" class="btn btn-primary">
+                            Decrypt Message
+                        </button>
+                    </form>
+
+                    <!-- TODO: Add result display when logic is implemented -->
+                    {% if decrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Decrypted Result:</h3>
+                        <p>{{ decrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if error_message %}
+            <div class="alert error">{{ error_message }}</div>
+            {% endif %}
+        </main>
+
+        <!-- Example section -->
+        <div class="example-box">
+            <h2>📚 Example Calculation</h2>
+            <p>Let's encrypt the letter 'B' using a=5, b=8:</p>
+            <ol>
+                <li>Convert 'B' to its position: B = 1</li>
+                <li>Apply the formula: E(1) = (5 × 1 + 8) mod 26 = 13</li>
+                <li>Convert position 13 back to a letter: 13 = N</li>
+                <li>Result: B → N</li>
+            </ol>
+            <p>To decrypt 'N' back to 'B':</p>
+            <ol>
+                <li>Find the modular inverse of a=5 (mod 26): a⁻¹ = 21</li>
+                <li>Apply the decryption formula: D(13) = 21 × (13 - 8) mod 26 = 21 × 5 mod 26 = 105 mod 26 = 1</li>
+                <li>Convert position 1 back to a letter: 1 = B</li>
+                <li>Result: N → B</li>
+            </ol>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="example-box">
+            <h2>📝 Implementation Guide</h2>
+            <p><strong>To implement this cipher:</strong></p>
+            <ol>
+                <li>Implement <code>mod_inverse()</code> function (needed for decryption)</li>
+                <li>Implement <code>affine_encrypt()</code> using formula: (ax + b) mod 26</li>
+                <li>Implement <code>affine_decrypt()</code> using formula: a⁻¹ × (y - b) mod 26</li>
+                <li>Add form handling in <code>app.py</code></li>
+                <li>Test with: "HELLO" with a=5, b=8 → "NSZZW"</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

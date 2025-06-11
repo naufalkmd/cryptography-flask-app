@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    404 ERROR PAGE
+    
+    This page is shown when someone tries to visit a URL that doesn't exist.
+    It provides a friendly message and helps them get back to the main app.
+    -->
+    
+    <div class="container">
+        <header>
+            <h1>🔍 Page Not Found</h1>
+            <p class="subtitle">Error 404</p>
+        </header>
+
+        <main style="text-align: center;">
+            <div class="info-box">
+                <h2>Oops! This page doesn't exist.</h2>
+                <p>
+                    The page you're looking for might have been moved, deleted, or you might have typed the wrong URL.
+                </p>
+                <p>
+                    Don't worry - let's get you back to exploring cryptography!
+                </p>
+            </div>
+
+            <div style="margin: var(--spacing-lg) 0;">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    🏠 Go Back Home
+                </a>
+            </div>
+
+            <div class="example-box">
+                <h2>Available Pages</h2>
+                <ul style="text-align: left;">
+                    <li><a href="{{ url_for('index') }}">🏠 Home Page</a></li>
+                    <li><a href="{{ url_for('caesar') }}">🏛️ Caesar Cipher</a></li>
+                    <li><a href="{{ url_for('vigenere') }}">🔑 Vigenère Cipher</a></li>
+                    <li><a href="{{ url_for('affine') }}">📐 Affine Cipher</a></li>
+                    <li><a href="{{ url_for('rsa') }}">🔒 RSA Cipher</a></li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

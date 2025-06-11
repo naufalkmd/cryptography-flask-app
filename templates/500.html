@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    500 ERROR PAGE
+    
+    This page is shown when something goes wrong in our code.
+    It provides a friendly message and helps users report the issue.
+    -->
+    
+    <div class="container">
+        <header>
+            <h1>⚠️ Server Error</h1>
+            <p class="subtitle">Error 500</p>
+        </header>
+
+        <main style="text-align: center;">
+            <div class="info-box">
+                <h2>Something went wrong on our end.</h2>
+                <p>
+                    We're sorry! There was an internal server error while processing your request.
+                    This is usually a temporary issue.
+                </p>
+                <p>
+                    Please try again in a few moments, or go back to the home page.
+                </p>
+            </div>
+
+            <div style="margin: var(--spacing-lg) 0;">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    🏠 Go Back Home
+                </a>
+                <button onclick="window.location.reload()" class="btn btn-secondary" style="margin-left: var(--spacing-sm);">
+                    🔄 Try Again
+                </button>
+            </div>
+
+            <div class="example-box">
+                <h2>For Developers</h2>
+                <p>If you're developing this app, check the console output for detailed error information.</p>
+                <p>Common causes of 500 errors:</p>
+                <ul style="text-align: left;">
+                    <li>Missing imports in Python files</li>
+                    <li>Syntax errors in templates</li>
+                    <li>Undefined variables passed to templates</li>
+                    <li>Database connection issues</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

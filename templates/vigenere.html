@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenère Cipher - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    VIGENÈRE CIPHER TEMPLATE - PLACEHOLDER FOR FUTURE IMPLEMENTATION
+    
+    This template is set up with the structure needed for the Vigenère cipher.
+    The forms are ready - you just need to implement the logic in app.py and ciphers.py!
+    -->
+    
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index') }}" class="btn btn-back">Back to Home</a>
+            <h1>🔑 Vigenère Cipher</h1>
+            <p class="subtitle">A Polyalphabetic Substitution Cipher</p>
+        </header>
+
+        <!-- Educational Information -->
+        <div class="info-box">
+            <h2>How the Vigenère Cipher Works</h2>
+            <p>
+                The Vigenère cipher improves upon the Caesar cipher by using a keyword to determine different shift values for each letter in the message.
+            </p>
+            <p>
+                <strong>The Basic Idea:</strong> Instead of shifting every letter by the same amount, each letter is shifted by a different amount based on the corresponding letter in the keyword.
+            </p>
+            <p>
+                <strong>Step by Step:</strong>
+            </p>
+            <ol>
+                <li>Choose a keyword (e.g., "KEY")</li>
+                <li>Repeat the keyword to match the length of your message (e.g., "HELLO" → "KEYKE")</li>
+                <li>For each letter in your message, shift it by the position value of the corresponding keyword letter (A=0, B=1, etc.)</li>
+            </ol>
+            <p>
+                <strong>Example:</strong> Encrypting "HELLO" with keyword "KEY":
+            </p>
+            <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                <tr style="background-color: #f3f4f6;">
+                    <th style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Plain:</th>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">H (7)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">E (4)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">L (11)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">L (11)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">O (14)</td>
+                </tr>
+                <tr>
+                    <th style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Key:</th>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">K (10)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">E (4)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Y (24)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">K (10)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">E (4)</td>
+                </tr>
+                <tr style="background-color: #f3f4f6;">
+                    <th style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Calculation:</th>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">(7+10) % 26 = 17</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">(4+4) % 26 = 8</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">(11+24) % 26 = 9</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">(11+10) % 26 = 21</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">(14+4) % 26 = 18</td>
+                </tr>
+                <tr>
+                    <th style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">Cipher:</th>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">R (17)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">I (8)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">J (9)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">V (21)</td>
+                    <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center;">S (18)</td>
+                </tr>
+            </table>
+            <p><strong>Result:</strong> "HELLO" → "RIJVS"</p>
+        </div>
+
+        <main>
+            <!-- Flash Messages (success/error notifications) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="result-box {{ 'success' if category == 'success' else 'error' }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="cipher-forms">
+                <!-- ENCRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔒 Encrypt Text</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this form to vigenere_encrypt() function
+                        In app.py, add form handling similar to Caesar cipher:
+                        
+                        if 'vigenere_encrypt_submit' in request.form:
+                            plain_text = request.form['vigenere_encrypt_text']
+                            keyword = request.form['vigenere_keyword']
+                            result = vigenere_encrypt(plain_text, keyword)
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="vigenere_encrypt_text">Text to Encrypt:</label>
+                            <textarea 
+                                id="vigenere_encrypt_text" 
+                                name="vigenere_encrypt_text" 
+                                placeholder="Enter your message here..."
+                                required
+                            >{{ form_data.encrypt_text if form_data else '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vigenere_keyword">Keyword:</label>
+                            <input 
+                                type="text" 
+                                id="vigenere_keyword" 
+                                name="vigenere_keyword" 
+                                placeholder="Enter keyword (letters only)"
+                                pattern="[A-Za-z]+"
+                                value="{{ form_data.encrypt_keyword if form_data else '' }}"
+                                required
+                            >
+                            <small>Use only letters (A-Z). The keyword will repeat to match your message length.</small>
+                        </div>
+
+                        <button type="submit" name="vigenere_encrypt_submit" class="btn btn-primary">
+                            Encrypt Message
+                        </button>
+                    </form>
+
+                    <!-- TODO: Add result display when logic is implemented -->
+                    {% if encrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Encryption Result:</h3>
+                        <p class="result-text">{{ encrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- DECRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔓 Decrypt Text</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this form to vigenere_decrypt() function
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="vigenere_decrypt_text">Text to Decrypt:</label>
+                            <textarea 
+                                id="vigenere_decrypt_text" 
+                                name="vigenere_decrypt_text" 
+                                placeholder="Enter encrypted message here..."
+                                required
+                            >{{ form_data.decrypt_text if form_data else '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vigenere_decrypt_keyword">Keyword:</label>
+                            <input 
+                                type="text" 
+                                id="vigenere_decrypt_keyword" 
+                                name="vigenere_decrypt_keyword" 
+                                placeholder="Enter the same keyword used for encryption"
+                                pattern="[A-Za-z]+"
+                                value="{{ form_data.decrypt_keyword if form_data else '' }}"
+                                required
+                            >
+                            <small>Must be the same keyword used for encryption!</small>
+                        </div>
+
+                        <button type="submit" name="vigenere_decrypt_submit" class="btn btn-primary">
+                            Decrypt Message
+                        </button>
+                    </form>
+
+                    <!-- TODO: Add result display when logic is implemented -->
+                    {% if decrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Decryption Result:</h3>
+                        <p class="result-text">{{ decrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Show error message if something went wrong -->
+            {% if error_message %}
+            <div class="result-box error">
+                <h3>❌ Error:</h3>
+                <p>{{ error_message }}</p>
+            </div>
+            {% endif %}
+        </main>
+
+        <!-- Implementation Guide -->
+        <div class="example-box">
+            <h2>📝 Implementation Guide</h2>
+            <p><strong>To implement this cipher:</strong></p>
+            <ol>
+                <li>In <code>ciphers.py</code>, implement <code>vigenere_encrypt()</code> and <code>vigenere_decrypt()</code></li>
+                <li>In <code>app.py</code>, add form handling in the <code>vigenere()</code> route</li>
+                <li>Test with: Message "ATTACKATDAWN", Keyword "LEMON" → Result "LXFOPVEFRNHR"</li>
+            </ol>
+            <p>
+                <strong>Hint:</strong> You can reuse parts of the Caesar cipher code! A Vigenère cipher is essentially multiple Caesar ciphers where the shift changes for each letter.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

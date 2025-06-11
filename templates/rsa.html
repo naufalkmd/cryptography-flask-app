@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA Cipher - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    RSA CIPHER TEMPLATE - PLACEHOLDER FOR FUTURE IMPLEMENTATION
+    
+    RSA is much more complex than the other ciphers! It uses public-key cryptography
+    with prime numbers. This template provides the structure for implementation.
+    -->
+    
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index') }}" class="btn btn-back">Back to Home</a>
+            <h1>🔒 RSA Cipher</h1>
+            <p class="subtitle">Modern Public-Key Cryptography</p>
+        </header>
+
+        <!-- Educational Information -->
+        <div class="info-box">
+            <h2>How RSA Works</h2>
+            <p>
+                RSA (Rivest–Shamir–Adleman) is a public-key cryptosystem that is widely used for secure data transmission. Unlike the other ciphers we've seen, RSA uses <strong>two different keys</strong>:
+            </p>
+            <ul>
+                <li>A <strong>public key</strong> that anyone can use to encrypt messages</li>
+                <li>A <strong>private key</strong> that only the recipient knows, used for decryption</li>
+            </ul>
+            
+            <p><strong>Key Generation Process:</strong></p>
+            <ol>
+                <li>Choose two distinct prime numbers: p and q</li>
+                <li>Calculate n = p × q</li>
+                <li>Calculate φ(n) = (p-1) × (q-1)</li>
+                <li>Choose e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1</li>
+                <li>Calculate d such that (d × e) mod φ(n) = 1</li>
+                <li>Public key = (e, n), Private key = (d, n)</li>
+            </ol>
+            
+            <p><strong>Encryption:</strong> c = m<sup>e</sup> mod n</p>
+            <p><strong>Decryption:</strong> m = c<sup>d</sup> mod n</p>
+            
+            <p>
+                <strong>Note:</strong> For educational purposes, we'll use small prime numbers. In real-world applications, RSA uses primes with hundreds of digits!
+            </p>
+        </div>
+
+        <main>
+            <!-- Flash Messages (success/error notifications) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="result-box {{ 'success' if category == 'success' else 'error' }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="cipher-forms">
+                <!-- KEY GENERATION SECTION -->
+                <div class="form-section">
+                    <h2>🔑 Generate RSA Keys</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this to rsa_generate_keys() function
+                        For educational purposes, we'll let users input small primes
+                        In real RSA, primes are hundreds of digits long!
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="prime_p">Prime number p:</label>
+                            <input 
+                                type="number" 
+                                id="prime_p" 
+                                name="prime_p" 
+                                value="{{ form_data.prime_p or 17 }}"
+                                min="2"
+                                required
+                            >
+                            <small>Enter a small prime number (e.g., 17, 19, 23)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prime_q">Prime number q:</label>
+                            <input 
+                                type="number" 
+                                id="prime_q" 
+                                name="prime_q" 
+                                value="{{ form_data.prime_q or 19 }}"
+                                min="2"
+                                required
+                            >
+                            <small>Enter a different prime number (e.g., 11, 13, 29)</small>
+                        </div>
+
+                        <button type="submit" name="generate_keys_submit" class="btn btn-primary">
+                            Generate Keys
+                        </button>
+                    </form>
+
+                    <!-- TODO: Display generated keys when logic is implemented -->
+                    {% if public_key and private_key %}
+                    <div class="result-box success">
+                        <p><strong>Public Key:</strong> ({{ public_key[0] }}, {{ public_key[1] }})</p>
+                        <p><strong>Private Key:</strong> ({{ private_key[0] }}, {{ private_key[1] }})</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- ENCRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔒 Encrypt Message</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this form to rsa_encrypt() function
+                        Note: For simplicity, we'll encrypt single characters or small numbers
+                        Real RSA encrypts much larger blocks of data
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="rsa_encrypt_text">Message (single character or small number):</label>
+                            <input 
+                                type="text" 
+                                id="rsa_encrypt_text" 
+                                name="rsa_encrypt_text" 
+                                placeholder="Enter a single letter or small number"
+                                maxlength="3"
+                                value = "{{ form_data.rsa_encrypt_text if form_data else '' }}"
+                                required
+                            >
+                            <small>For educational purposes, encrypt one character at a time</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="public_key_e">Public Key e:</label>
+                            <input 
+                                type="number" 
+                                id="public_key_e" 
+                                name="public_key_e" 
+                                placeholder="From key generation"
+                                value = "{{ form_data.public_key_e if form_data else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="public_key_n">Public Key n:</label>
+                            <input 
+                                type="number" 
+                                id="public_key_n" 
+                                name="public_key_n" 
+                                placeholder="From key generation"
+                                value = "{{ form_data.public_key_n if form_data else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <button type="submit" name="rsa_encrypt_submit" class="btn btn-primary">
+                            Encrypt Message
+                        </button>
+                    </form>
+
+                    <!-- TODO: Add result display when logic is implemented -->
+                    {% if encrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Encryption Result:</h3>
+                        <p class="result-text">{{ encrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- DECRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔓 Decrypt Message</h2>
+                    <form method="POST">
+                        <!-- 
+                        TODO: Connect this form to rsa_decrypt() function
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="rsa_decrypt_text">Encrypted Number:</label>
+                            <input 
+                                type="number" 
+                                id="rsa_decrypt_text" 
+                                name="rsa_decrypt_text" 
+                                placeholder="Enter the encrypted number"
+                                value = "{{ form_data.rsa_decrypt_text if form_data else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="private_key_d">Private Key d:</label>
+                            <input 
+                                type="number" 
+                                id="private_key_d" 
+                                name="private_key_d" 
+                                placeholder="From key generation"
+                                value = "{{ form_data.private_key_d if form_data else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="private_key_n">Private Key n:</label>
+                            <input 
+                                type="number" 
+                                id="private_key_n" 
+                                name="private_key_n" 
+                                placeholder="Same n from key generation"
+                                value = "{{ form_data.private_key_n if form_data else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <button type="submit" name="rsa_decrypt_submit" class="btn btn-primary">
+                            Decrypt Message
+                        </button>
+                    </form>
+
+                    <!-- TODO: Add result display when logic is implemented -->
+                    {% if decrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Decryption Result:</h3>
+                        <p class="result-text">{{ decrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Show error message if something went wrong -->
+            {% if error_message %}
+            <div class="result-box error">
+                <h3>❌ Error:</h3>
+                <p>{{ error_message }}</p>
+            </div>
+            {% endif %}
+        </main>
+
+        <!-- Example section -->
+        <div class="example-box">
+            <h2>📚 RSA Example (Small Numbers)</h2>
+            <p><strong>Key Generation:</strong></p>
+            <ol>
+                <li>Choose p = 17 and q = 19</li>
+                <li>Calculate n = p × q = 17 × 19 = 323</li>
+                <li>Calculate φ(n) = (p-1) × (q-1) = 16 × 18 = 288</li>
+                <li>Choose e = 5 (since gcd(5, 288) = 1)</li>
+                <li>Calculate d such that (d × 5) mod 288 = 1</li>
+                <li>d = 173 (since 5 × 173 = 865 and 865 mod 288 = 1)</li>
+                <li>Public key = (5, 323), Private key = (173, 323)</li>
+            </ol>
+            
+            <p><strong>Encryption:</strong></p>
+            <p>To encrypt the letter 'A' (which is 0 in our 0-25 system):</p>
+            <p>c = 0<sup>5</sup> mod 323 = 0</p>
+            
+            <p>To encrypt the letter 'B' (which is 1 in our 0-25 system):</p>
+            <p>c = 1<sup>5</sup> mod 323 = 1</p>
+            
+            <p>To encrypt the letter 'C' (which is 2 in our 0-25 system):</p>
+            <p>c = 2<sup>5</sup> mod 323 = 32</p>
+            
+            <p><strong>Decryption:</strong></p>
+            <p>To decrypt 32 back to 'C':</p>
+            <p>m = 32<sup>173</sup> mod 323 = 2 = 'C'</p>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="example-box">
+            <h2>📝 Implementation Guide (Advanced)</h2>
+            <p><strong>To implement RSA:</strong></p>
+            <ol>
+                <li>Implement <code>is_prime()</code> to check if numbers are prime</li>
+                <li>Implement <code>mod_inverse()</code> using Extended Euclidean Algorithm</li>
+                <li>Implement <code>rsa_generate_keys(p, q)</code> to create public/private keys</li>
+                <li>Implement <code>rsa_encrypt(message, public_key)</code></li>
+                <li>Implement <code>rsa_decrypt(cipher, private_key)</code></li>
+                <li>Add form handling in <code>app.py</code></li>
+            </ol>
+            <p><strong>Warning:</strong> This is educational RSA with small numbers. Real RSA uses primes with hundreds of digits!</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    ABOUT PAGE
+    
+    This page provides educational information about cryptography
+    and the purpose of this web application.
+    -->
+    
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index') }}" class="btn btn-back">Back to Home</a>
+            <h1>📚 About This Project</h1>
+            <p class="subtitle">Learning Cryptography Through Code</p>
+        </header>
+
+        <main>
+            <div class="info-box">
+                <h2>What is This App?</h2>
+                <p>
+                    This is an educational web application built with Flask (Python) to help students learn about cryptographic algorithms
+                    in a hands-on, interactive way. It's designed specifically for Discrete Mathematics courses.
+                </p>
+                <p>
+                    <strong>Educational Goals:</strong>
+                </p>
+                <ul>
+                    <li>Understand how classic encryption algorithms work</li>
+                    <li>See the mathematical foundations behind cryptography</li>
+                    <li>Practice implementing algorithms in Python</li>
+                    <li>Learn web development with Flask</li>
+                    <li>Explore the evolution from simple to modern encryption</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h2>The Ciphers We Explore</h2>
+                
+                <h3>🏛️ Caesar Cipher (Fully Implemented)</h3>
+                <p>
+                    The simplest substitution cipher, used by Julius Caesar. Each letter is shifted by a fixed number of positions.
+                    <strong>Security:</strong> Very weak - can be broken by trying all 25 possible shifts.
+                </p>
+
+                <h3>🔑 Vigenère Cipher (For You to Implement)</h3>
+                <p>
+                    Uses a keyword to create multiple Caesar ciphers. Much stronger than Caesar cipher.
+                    <strong>Security:</strong> Moderate - can be broken with frequency analysis if the key is short.
+                </p>
+
+                <h3>📐 Affine Cipher (For You to Implement)</h3>
+                <p>
+                    Uses mathematical functions (ax + b) mod 26. Combines multiplication and addition.
+                    <strong>Security:</strong> Weak to moderate - vulnerable to frequency analysis.
+                </p>
+
+                <h3>🔒 RSA Cipher (For You to Implement)</h3>
+                <p>
+                    Modern public-key cryptography using prime numbers. Used in real-world security today!
+                    <strong>Security:</strong> Very strong when implemented with large primes.
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h2>Technical Implementation</h2>
+                <p>
+                    This application is built using:
+                </p>
+                <ul>
+                    <li><strong>Backend:</strong> Python with Flask framework</li>
+                    <li><strong>Frontend:</strong> HTML5, CSS3 (no JavaScript for simplicity)</li>
+                    <li><strong>Templating:</strong> Jinja2 (built into Flask)</li>
+                    <li><strong>Styling:</strong> Custom CSS with modern design principles</li>
+                </ul>
+                
+                <p>
+                    <strong>Why Flask?</strong> Flask is perfect for learning because it's simple, well-documented, 
+                    and doesn't hide the underlying web concepts. You can see exactly how HTTP requests and responses work.
+                </p>
+            </div>
+
+            <div class="example-box">
+                <h2>Learning Path</h2>
+                <ol>
+                    <li><strong>Start with Caesar Cipher:</strong> Understand the basics of substitution ciphers</li>
+                    <li><strong>Implement Vigenère:</strong> Learn about polyalphabetic ciphers and keywords</li>
+                    <li><strong>Try Affine Cipher:</strong> Explore mathematical functions in cryptography</li>
+                    <li><strong>Challenge with RSA:</strong> Dive into modern public-key cryptography</li>
+                </ol>
+                
+                <p>
+                    Each cipher builds on concepts from the previous ones, creating a natural learning progression
+                    from simple to complex encryption methods.
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Built for educational purposes - Discrete Mathematics Course Project</p>
+        </footer>
+    </div>
+</body>
+</html>

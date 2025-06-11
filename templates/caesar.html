@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher - Cryptography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!--
+    This template handles the Caesar cipher page.
+    It shows two forms: one for encryption and one for decryption.
+    
+    Flask can pass data to templates using variables like encrypt_result.
+    These variables come from the render_template() call in app.py.
+    -->
+    
+    <div class="container">
+        <header>
+            <a href="{{ url_for('index') }}" class="btn btn-back">Back to Home</a>
+            <h1>🏛️ Caesar Cipher</h1>
+            <p class="subtitle">The Classic Shift Cipher</p>
+        </header>
+
+        <!-- Educational Information -->
+        <div class="info-box">
+            <h2>How the Caesar Cipher Works</h2>
+            <p>
+                The Caesar cipher is one of the earliest known encryption techniques, named after Julius Caesar who used it to communicate with his generals.
+            </p>
+            <p>
+                <strong>The Basic Idea:</strong> Each letter in the plaintext is shifted a certain number of places down the alphabet.
+            </p>
+            <p>
+                <strong>Mathematical Formula:</strong> For each letter position p, the encrypted position is (p + shift) mod 26
+            </p>
+            <p>
+                <strong>Example:</strong> With a shift of 3, A → D, B → E, C → F, and so on. "HELLO" becomes "KHOOR"
+            </p>
+        </div>
+
+        <main>
+            <!-- Flash Messages (success/error notifications) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="result-box {{ 'success' if category == 'success' else 'error' }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="cipher-forms">
+                <!-- ENCRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔒 Encrypt Text</h2>
+                    <form method="POST">
+                        <!-- 
+                        method="POST" tells the browser to send form data to the server
+                        The name attributes (encrypt_text, encrypt_shift) are used
+                        in app.py to get the form data: request.form['encrypt_text']
+                        -->
+                        
+                        <div class="form-group">
+                            <label for="encrypt_text">Text to Encrypt:</label>
+                            <textarea 
+                                id="encrypt_text" 
+                                name="encrypt_text" 
+                                placeholder="Enter your message here..."
+                                required
+                            >{{ form_data.encrypt_text if form_data else '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="encrypt_shift">Shift Key (number):</label>
+                            <input 
+                                type="number" 
+                                id="encrypt_shift" 
+                                name="encrypt_shift" 
+                                min="1" 
+                                max="25" 
+                                value="{{ form_data.encrypt_shift if form_data else 3 }}"
+                                required
+                            >
+                            <small>Choose a number between 1 and 25</small>
+                        </div>
+
+                        <button type="submit" name="encrypt_submit" class="btn btn-primary">
+                            Encrypt Message
+                        </button>
+                    </form>
+
+                    <!-- Show encryption result if it exists -->
+                    {% if encrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Encryption Result:</h3>
+                        <p class="result-text">{{ encrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- DECRYPTION FORM -->
+                <div class="form-section">
+                    <h2>🔓 Decrypt Text</h2>
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="decrypt_text">Text to Decrypt:</label>
+                            <textarea 
+                                id="decrypt_text" 
+                                name="decrypt_text" 
+                                placeholder="Enter encrypted message here..."
+                                required
+                            >{{ form_data.decrypt_text if form_data else '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="decrypt_shift">Shift Key (number):</label>
+                            <input 
+                                type="number" 
+                                id="decrypt_shift" 
+                                name="decrypt_shift" 
+                                min="1" 
+                                max="25" 
+                                value="{{ form_data.decrypt_shift if form_data else 3 }}"
+                                required
+                            >
+                            <small>Use the same shift key that was used for encryption</small>
+                        </div>
+
+                        <button type="submit" name="decrypt_submit" class="btn btn-primary">
+                            Decrypt Message
+                        </button>
+                    </form>
+
+                    <!-- Show decryption result if it exists -->
+                    {% if decrypt_result %}
+                    <div class="result-box success">
+                        <h3>✅ Decryption Result:</h3>
+                        <p class="result-text">{{ decrypt_result }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Show error message if something went wrong -->
+            {% if error_message %}
+            <div class="result-box error">
+                <h3>❌ Error:</h3>
+                <p>{{ error_message }}</p>
+            </div>
+            {% endif %}
+        </main>
+
+        <!-- Example section for learning -->
+        <div class="example-box">
+            <h2>📚 Try These Examples</h2>
+            <p><strong>Example 1:</strong> Encrypt "HELLO WORLD" with shift 3</p>
+            <p>Expected result: "KHOOR ZRUOG"</p>
+            <hr style="margin: 10px 0; border-top: 1px dashed #ccc;">
+            <p><strong>Example 2:</strong> Encrypt "MEET ME AT DAWN" with shift 5</p>
+            <p>Expected result: "RJJY RJ FY IFBS"</p>
+            <hr style="margin: 10px 0; border-top: 1px dashed #ccc;">
+            <p><strong>Challenge:</strong> Can you decrypt "WKH TXLFN EURZQ IRA" with shift 3?</p>
+        </div>
+        
+        <!-- Educational deep dive -->
+        <div class="info-box">
+            <h2>Understanding the Code</h2>
+            <p>
+                In our <code>ciphers.py</code> file, the Caesar cipher works by:
+            </p>
+            <ol>
+                <li>Converting each letter to its position in the alphabet (A=0, B=1, etc.)</li>
+                <li>Adding the shift value to this position</li>
+                <li>Using modulo 26 (% 26) to wrap around if we go past Z</li>
+                <li>Converting the new position back to a letter</li>
+            </ol>
+            <p>
+                <strong>Key Insight:</strong> Decryption is just encryption with a negative shift!
+                If we encrypted with shift +3, we decrypt with shift -3.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

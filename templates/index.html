@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptography Web App - Discrete Math Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- 
+    This is the home page template with 4 big buttons for cipher selection.
+    
+    We use simple HTML and CSS to create a clean, modern interface.
+    Each button is actually an <a> tag styled to look like a button.
+    
+    url_for() is a Flask function that generates URLs for our routes.
+    This is better than hardcoding URLs because Flask can change them if needed.
+    -->
+    
+    <div class="container">
+        <header>
+            <h1>🔐 Cryptography Explorer</h1>
+            <p class="subtitle">Discrete Mathematics Course Project</p>
+            <p class="description">
+                Learn about different encryption techniques by exploring these four classic cryptographic algorithms.
+                Click on any cipher to try it out!
+            </p>
+        </header>
+
+        <main>
+            <!-- 
+            Big Cipher Selection Buttons
+            
+            These are styled as large, clickable cards that take you to each cipher page.
+            We use CSS Grid to arrange them in a 2x2 layout on larger screens,
+            and they stack vertically on mobile devices.
+            -->
+            <div class="cipher-buttons">
+                <!-- Caesar Cipher Button -->
+                <a href="{{ url_for('caesar') }}" class="cipher-button">
+                    <div class="icon">🏛️</div>
+                    <h2>Caesar Cipher</h2>
+                    <p>Shift each letter by a fixed number of positions</p>
+                    <span class="difficulty beginner">Beginner</span>
+                </a>
+
+                <!-- Vigenère Cipher Button -->
+                <a href="{{ url_for('vigenere') }}" class="cipher-button">
+                    <div class="icon">🔑</div>
+                    <h2>Vigenère Cipher</h2>
+                    <p>Use a keyword to create multiple shifts</p>
+                    <span class="difficulty intermediate">Intermediate</span>
+                </a>
+
+                <!-- Affine Cipher Button -->
+                <a href="{{ url_for('affine') }}" class="cipher-button">
+                    <div class="icon">📐</div>
+                    <h2>Affine Cipher</h2>
+                    <p>Apply mathematical functions to encrypt</p>
+                    <span class="difficulty intermediate">Intermediate</span>
+                </a>
+
+                <!-- RSA Cipher Button -->
+                <a href="{{ url_for('rsa') }}" class="cipher-button">
+                    <div class="icon">🔒</div>
+                    <h2>RSA Cipher</h2>
+                    <p>Modern public-key cryptography</p>
+                    <span class="difficulty advanced">Advanced</span>
+                </a>
+            </div>
+        </main>
+
+        <!-- Educational Information -->
+        <div class="info-box">
+            <h2>What is Cryptography?</h2>
+            <p>
+                Cryptography is the practice of secure communication in the presence of third parties.
+                It involves creating written or generated codes that allow information to be kept secret.
+            </p>
+            <p>
+                In this app, you'll learn about four important cryptographic algorithms:
+            </p>
+            <ul>
+                <li><strong>Caesar Cipher:</strong> A simple substitution cipher where each letter is shifted by a fixed number of positions.</li>
+                <li><strong>Vigenère Cipher:</strong> Uses a keyword to create multiple Caesar ciphers for different positions in the text.</li>
+                <li><strong>Affine Cipher:</strong> Applies a mathematical function (ax + b) mod 26 to each letter position.</li>
+                <li><strong>RSA:</strong> A modern public-key cryptosystem that uses prime numbers for secure communication.</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Built with Flask and Python for learning cryptography concepts</p>
+            <p>Discrete Mathematics Course Project</p>
+        </footer>
+    </div>
+</body>
+</html>
